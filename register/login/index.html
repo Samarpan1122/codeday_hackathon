@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+        import { sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+              authDomain: "codeday-32a37.firebaseapp.com",
+              databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+              projectId: "codeday-32a37",
+              storageBucket: "codeday-32a37.appspot.com",
+              messagingSenderId: "306519396408",
+              appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+              measurementId: "G-QYL57RYSHE"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+        const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+// Get the submit button
+const submitBtn = document.getElementById("submitBtn");
+
+// Get the Auth object for the default app
+const auth = getAuth();
+
+// Add event listener to submit button
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // User is signed in
+      const user = userCredential.user;
+
+      // Check if user is verified
+      if (!user.emailVerified) {
+        alert("Please verify your email before logging in.");
+      } else {
+        // Check if user is in the "users/dealer" path in the database
+        const dealerRef = ref(db, "users/applicant/" + user.uid);
+        get(dealerRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              // User is verified and in the "users/dealer" path, redirect to next page
+              const uniqueLink = `/register/dashboard/new.html?applicant${user.uid}`;
+              
+              window.location.replace(uniqueLink);
+            } else {
+              // User is not in the "users/dealer" path, prevent login
+              alert("You do not have access to this page.");
+            }
+          })
+          .catch((error) => {
+            // Handle errors
+            alert(error.message);
+          });
+      }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      // Handle errors
+      alert(errorMessage);
+    });
+});
+
+</script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fafafa;
+      }
+      
+      header {
+        background-color: #2196F3;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+      }
+      
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      #email {
+        width: 80%;
+      }
+
+      #password {
+        width: 80%;
+      }
+
+      input[type="text"], input[type="password"] {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      
+      button[type="submit"] {
+        background-color: #2196F3;
+        color: white;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      button[type="submit"]:hover {
+        background-color: #53b2ff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Login</h1>
+    </header>
+    <form>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" placeholder="Enter your email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password" name="password" required>
+      <p>If new to this site please signup <a href="/register/signup/index.html">here</a> or read the details about this website <a href="/index.html">here</a></p>
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+      #loading {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#content {
+  display: none;
+  background-color: white;
+}
+
+      /* Set the background color of the header and main sections */
+      header, main {
+        background-color: #2196F3;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      /* Style the h1 element */
+      h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+      
+      /* Style the buttons */
+      button {
+        background-color: #fff;
+        color: #2196F3;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      }
+      
+      button:hover {
+        background-color: #07375e;
+        color: #fff;
+      }
+      
+      /* Center the user-info div */
+      #user-info {
+        color: black;
+        margin-right: auto;
+      }
+      
+      /* Center the main section */
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      
+      /* Style the form */
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+        max-width: 600px;
+        width: 100%;
+      }
+      
+      label {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      
+      input {
+        font-size: 24px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      }
+      
+      input[type="submit"] {
+        background-color: #2196F3;
+        color: #fff;
+        font-size: 24px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        margin-bottom: 0;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        box-shadow: none;
+      }
+      
+      /* Style the profile entries */
+      .entry {
+        margin-top: 50px;
+        max-width: 600px;
+        width: 100%;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        padding: 20px;
+      }
+      
+      .entry h2 {
+        font-size: 24px;
+        margin: 0;
+      }
+      
+      .entry p {
+        font-size: 18px;
+        margin: 10px 0;
+      }
+    </style>
+    <style>
+      /* Add this rule to adjust font sizes for smaller screens */
+      @media screen and (max-width: 600px) {
+        h1 {
+          font-size: 24px;
+        }
+        h2 {
+          font-size: 18px;
+        }
+        button {
+          font-size: 18px;
+          padding: 8px 16px;
+        }
+      }
+    
+      /* Rest of your CSS styles... */
+    
+    </style>
+    
+  </head>
+  <body>
+    <div id="loading"></div>
+    <div id="content">
+    <header>
+        <button id="back-btn">Back</button>
+      <div id="user-info"></div>
+      <button id="logout-btn">Logout</button>
+    </header>
+    <div id="new">
+        <h1 style="background-color: cyan;">Employment State: <span id="state"></h1>
+        <h1 style="background-color: cyan;">City: <span id="district"></h1>
+        <h1 style="background-color: cyan;">Pincode: <span id="pincode"></h1>
+        <h1 style="background-color: cyan;">Current Employment status: <span id="ces"></h1>
+        <h1 style="background-color: cyan;">Experience: <span id="exp"></h1>
+        <h1 style="background-color: cyan;">Expected Salary(pm): <span id="ES"></h1>
+        <h1>Age: <span id="age"></h1>
+        <h1>DOB: <span id="dob"></h1>
+        <h1>Gender: <span id="gen"></h1>
+        <h1>Email: <span id="email"></h1>
+        <h1>Phone Number: <span id="phone_number"></h1>
+        <h1>Job Type<span id="jt"></h1>
+        <h1>Job Role<span id="jr"></h1>
+        <h1>Previously worked companies<span id="Pwc"></h1>
+        <h1>10th: <span id="10"></h1>
+        <h1>12th: <span id="12"></h1>
+        <h1>ITI: <span id="iti"></h1>
+        <h1>Diploma: <span id="diploma"></h1>
+        <h1>Graduation: <span id="grad"></h1>
+        <h1>Post Graduation: <span id="PG"></h1>
+        <h1>Special Skill: <span id="SS"></h1>
+        <h1>Marital Satus: <span id="ms"></h1>
+        <h1>Children: <span id="children"></h1>
+        <h1>Residence: <span id="residence"></h1>
+        <h1>Current Income: <span id="CI"></h1>
+    </div>
+</body>
+<script>window.addEventListener('load', function() {
+  setTimeout(function() {
+    var loading = document.getElementById('loading');
+    var content = document.getElementById('content');
+
+    loading.style.display = 'none';
+    content.style.display = 'block';
+  }, 5000);
+});
+</script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          // your firebase config
+          apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+        authDomain: "codeday-32a37.firebaseapp.com",
+        databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+        projectId: "codeday-32a37",
+        storageBucket: "codeday-32a37.appspot.com",
+        messagingSenderId: "306519396408",
+        appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+        measurementId: "G-QYL57RYSHE"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth();
+        
+        // Get the elements
+        const userInfo = document.getElementById("user-info");
+        const logoutBtn = document.getElementById("logout-btn");
+        const showProfileBtn = document.getElementById("show-profile-btn");
+        const createProfileBtn = document.getElementById("create-profile-btn");
+        const email = document.getElementById("email");
+        const phone_number = document.getElementById("phone_number");
+        const ten = document.getElementById("10");
+        const twelve = document.getElementById("12");
+        const iti = document.getElementById("iti");
+        const diploma = document.getElementById("diploma");
+        const grad = document.getElementById("grad");
+        const PG = document.getElementById("PG");
+        const SS = document.getElementById("SS");
+        const exp = document.getElementById("exp");
+        const state = document.getElementById("state");
+        const district = document.getElementById("district");
+        const CI = document.getElementById("CI");
+        const ES = document.getElementById("ES");
+        const pincode = document.getElementById("pincode");
+        const age = document.getElementById("age");
+        const dob = document.getElementById("dob");
+        const gen = document.getElementById("gen");
+        const ms = document.getElementById("ms");
+        const children = document.getElementById("children");
+        const residence = document.getElementById("residence");
+        const ces = document.getElementById("ces");
+        const jt = document.getElementById("jt");
+        const jr = document.getElementById("jr");
+        const Pwc = document.getElementById("Pwc");
+
+
+
+        // Display the user's name and email
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const usersRef = ref(db, "users/applicant");
+            get(usersRef).then((snapshot) => {
+              const userSnapshot = snapshot.child(user.uid);
+              const userName = userSnapshot.child("name").val();
+              const userEmail = userSnapshot.child("email").val();
+              const userphone = userSnapshot.child("phone_number").val();
+              const user10 = userSnapshot.child("10").val();
+              const user12 = userSnapshot.child("12").val();
+              const useriti = userSnapshot.child("iti").val();
+              const userdiploma = userSnapshot.child("diploma").val();
+              const usergrad = userSnapshot.child("grad").val();
+              const userPG = userSnapshot.child("PG").val();
+              const userSS = userSnapshot.child("SS").val();
+              const userexp = userSnapshot.child("exp").val();
+              const userposition = userSnapshot.child("position").val();
+              const userstate = userSnapshot.child("state").val();
+              const userdistrict = userSnapshot.child("district").val();
+              const userCI = userSnapshot.child("CI").val();
+              const userES = userSnapshot.child("ES").val();
+              const userpincode = userSnapshot.child("pin").val();
+              const userage = userSnapshot.child("age").val();
+              const userdob = userSnapshot.child("dob").val();
+              const usergen = userSnapshot.child("gen").val();
+              const userms = userSnapshot.child("ms").val();
+              const userchildren = userSnapshot.child("children").val();
+              const userresidence = userSnapshot.child("residence").val();
+              const userces = userSnapshot.child("cemployment").val();
+              const userjt = userSnapshot.child("job type").val();
+              const userjr = userSnapshot.child("job role").val();
+              const userPwc = userSnapshot.child("pwc").val();
+
+              userInfo.textContent = `${userName}`;
+              ces.textContent = `${userces}`;
+              jt.textContent = `${userjt}`;
+              jr.textContent = `${userjr}`;
+              Pwc.textContent = `${userPwc}`;
+              email.textContent = `${userEmail}`;
+              phone_number.textContent = `${userphone}`;
+              ten.textContent = `${user10}`;
+              twelve.textContent = `${user12}`;
+              iti.textContent = `${useriti}`;
+              diploma.textContent = `${userdiploma}`;
+              grad.textContent = `${usergrad}`;
+              PG.textContent = `${userPG}`;
+              SS.textContent = `${userSS}`;
+              exp.textContent = `${userexp}`;
+              state.textContent = `${userstate}`;
+              district.textContent = `${userdistrict}`;
+              CI.textContent = `${userCI}`;
+              ES.textContent = `${userES}`;
+              pincode.textContent = `${userpincode}`;
+              age.textContent = `${userage}`;
+              dob.textContent = `${userdob}`;
+              gen.textContent = `${usergen}`;
+              ms.textContent = `${userms}`;
+              children.textContent = `${userchildren}`;
+              residence.textContent = `${userresidence}`;
+              
+            });
+          } else {
+            userInfo.textContent = "You are not logged in";
+          }
+        });
+        
+        // Add event listener to logout button
+        logoutBtn.addEventListener("click", () => {
+          auth.signOut().then(() => {
+            // Redirect to login page
+            window.location.replace("loginC.html");
+          });
+        });
+
+        const backBtn = document.getElementById("back-btn");
+
+backBtn.addEventListener("click", () => {
+    const uid = auth.currentUser.uid;
+    window.location.replace(`new.html?applicant${uid}`);
+});
+
+        
+    </script>
+
+  
+
+</body>
+</html>

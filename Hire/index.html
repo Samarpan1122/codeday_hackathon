@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>all streams</title>
+</head>
+<H1>All current Streams</H1>
+<button id="uid find">Uid Finder</button>
+<div id="st"></div>
+ <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      // your firebase config
+      apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+        authDomain: "codeday-32a37.firebaseapp.com",
+        databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+        projectId: "codeday-32a37",
+        storageBucket: "codeday-32a37.appspot.com",
+        messagingSenderId: "306519396408",
+        appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+        measurementId: "G-QYL57RYSHE"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
+
+    // Get the elements
+   const st = document.getElementById('st');
+    // Display the user's name and email
+
+        const userRef = ref(db, `users/applicant/links`);
+        get(userRef).then((snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+            var uid = childSnapshot.key;
+            var streamlink = childSnapshot.val();
+            var uuid = "jhdshdjfh" + uid; 
+            let div = document.createElement('div');
+
+        div.id = 'content';
+        div.innerHTML = `<iframe width="420" height="315"
+src="${streamlink}">
+</iframe>
+<br>
+<h1>buy uid and search info</h1><a href="buy.html$${uuid}">buy</a>`;
+
+        document.body.appendChild(div);
+          });
+        });
+        const uidfind = document.getElementById('uid find');
+        uidfind.addEventListener("click", () => {
+
+    window.location.replace(`uid_find.html`);
+});
+  </script>
+</html>

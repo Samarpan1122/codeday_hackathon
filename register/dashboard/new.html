@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Home</title>
+    <style>
+      /* Set the background color of the header and main sections */
+      header, main {
+        background-color: #2196F3;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      /* Style the h1 element */
+      h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+      
+      /* Style the buttons */
+      button {
+        background-color: #fff;
+        color: #2196F3;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      }
+      
+      button:hover {
+        background-color: #07375e;
+        color: #fff;
+      }
+      
+      /* Center the user-info div */
+      #user-info {
+        margin-right: auto;
+      }
+      
+      /* Center the main section */
+      main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      /* Style the show and create buttons */
+      #show-profile-btn, #create-profile-btn {
+        background-color: #fff;
+        color: #2196F3;
+        border: none;
+        padding: 20px;
+        margin: 10px;
+        font-size: 36px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      }
+      
+      #show-profile-btn:hover, #create-profile-btn:hover {
+        background-color: #052d4e;
+        color: #fff;
+      }
+    
+      /* Adjustments for mobile devices */
+      @media only screen and (max-width: 600px) {
+        h1 {
+          font-size: 24px;
+        }
+    
+        button {
+          font-size: 18px;
+        }
+    
+        #show-profile-btn, #create-profile-btn {
+          font-size: 24px;
+        }
+      }
+    </style>
+    
+  </head>
+  <body>
+    <header>
+      <div id="user-info"></div>
+      <button id="logout-btn">Logout</button>
+    </header>
+    <main>
+      <div>
+        <button id="show-profile-btn">Show Profile</button>
+      </div>
+      <div>
+        <button id="create-profile-btn">Create Profile</button>
+      </div>
+      <div>
+        <button id="Photo">Documents</button>
+      </div>
+      <label>share your youtube stream link here ( replace "watch?v=" "embed/")</label><br>
+      <input type="text" id="streamlink" placeholder="enter your stream link here"><br>
+      <button id="sys">start your stream</button>
+    </main>
+    <div>
+      <h1>upload certificates,necessary documents,this may increase you chance to get a job(Images only allowed)</h1>
+      <h2>upload carefully</h2>
+      <h2>once uploaded it cant be deleted</h2>
+      <input type="file" id="fileInput" accept="image/*">
+      <div id="upload-progress"></div>
+
+      <button id="upload-btn">Upload File</button>
+    </div>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+      import { getDatabase, ref, get, update, set, push, remove } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        // your firebase config
+        apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+        authDomain: "codeday-32a37.firebaseapp.com",
+        databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+        projectId: "codeday-32a37",
+        storageBucket: "codeday-32a37.appspot.com",
+        messagingSenderId: "306519396408",
+        appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+        measurementId: "G-QYL57RYSHE"
+      };
+      
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth();
+      const storage = getStorage(app);
+      
+      // Get the elements
+      const userInfo = document.getElementById("user-info");
+      const logoutBtn = document.getElementById("logout-btn");
+      const showProfileBtn = document.getElementById("show-profile-btn");
+      const createProfileBtn = document.getElementById("create-profile-btn");
+      const fileInput = document.getElementById("fileInput");
+      const uploadBtn = document.getElementById("upload-btn");
+      const photobtn = document.getElementById("Photo");
+      const streamlink = document.getElementById("streamlink").value;
+      const sys = document.getElementById("sys");
+
+      // Display the user's name and email
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const usersRef = ref(db, "users/applicant");
+          get(usersRef).then((snapshot) => {
+            const userSnapshot = snapshot.child(user.uid);
+            const userName = userSnapshot.child("name").val();
+            const userEmail = user.email;
+            userInfo.textContent = `Welcome, ${userName}`;
+
+            document.getElementById("sys").onclick = function() {
+              const userRef = ref(db, "users/applicant/links");
+              const streamlink = document.getElementById("streamlink").value;
+              const uid = user.uid;
+              const updateObj = {};
+              updateObj[uid] = streamlink;
+            update(userRef, updateObj)
+      .then(() => {
+          console.log('updated successfully');
+          alert("stream started successfully");
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+            }
+           
+          });
+        } else {
+          userInfo.textContent = "You are not logged in";
+          window.location.replace("/register/login/index.html");
+        }
+      });
+      
+      // Add event listener to logout button
+      logoutBtn.addEventListener("click", () => {
+        auth.signOut().then(() => {
+          // Redirect to login page
+          window.location.replace("/register/login/index.html");
+        });
+      });
+      
+      // Add event listener to show profile button
+      showProfileBtn.addEventListener("click", () => {
+        // Redirect to the user's profile page
+        const uid = auth.currentUser.uid;
+        window.location.replace(`profile.html?applicant${uid}`);
+      });
+      
+      // Add event listener to create profile button
+      createProfileBtn.addEventListener("click", () => {
+        // Redirect to the create profile page
+        const uid = auth.currentUser.uid;
+        window.location.replace(`qualify.html?applicant${uid}`);
+      });
+
+      photobtn.addEventListener("click", () => {
+        // Redirect to the create profile page
+        const uid = auth.currentUser.uid;
+        window.location.replace(`docs.html?applicant${uid}`);
+      });
+
+
+      function updateProgressBar(progress) {
+  const progressBar = document.getElementById("upload-progress");
+  progressBar.style.width = `${progress}%`;
+  progressBar.textContent = `${progress}%`;
+}
+
+
+      uploadBtn.addEventListener("click", () => {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        
+        const uid = auth.currentUser.uid;
+
+        // Create a storage reference with the UID and file name
+        const fileRef = storageRef(storage, `users/applicant/${uid}/` + fileName );
+        
+        // Upload the file to Firebase Storage
+        uploadBytes(fileRef, file).then((snapshot) => {
+          console.log("File uploaded successfully!");
+          alert("File saved successfully");
+          // Get the download URL for the uploaded file
+          getDownloadURL(fileRef).then((downloadURL) => {
+            console.log("Download URL:", downloadURL);
+            // Save the download URL and file name to the database
+
+            const userRef = ref(db, `users/applicant/${uid}`);
+            const newFileKey = push(userRef).key;
+            update(userRef, {
+              [newFileKey]: {
+                fileName: fileName,
+                downloadURL: downloadURL,
+              },
+            }).then(() => {
+              console.log("File data saved successfully!");
+              alert("File link saved successfully");
+            });
+
+          }).catch((error) => {
+            console.error("Error uploading file:", error);
+            alert("error saving file link");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

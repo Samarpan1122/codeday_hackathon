@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <style>
+        /* Body background color */
+body {
+  background-color: #fff;
+}
+
+/* Headings color */
+header {
+  color: #2196F3;
+}
+
+/* Select dropdown color */
+select {
+  color: #000;
+  background-color: #fff;
+  border-color: #2196F3;
+}
+
+/* Submit button color */
+#submit-btn {
+  background-color: #2196F3;
+}
+
+/* Submit button hover color */
+#submit-btn:hover {
+  background-color: #00111f;
+}
+
+/* User info styles */
+#user-info {
+  color: black;
+  margin-right: auto;
+}
+
+/* Logout button styles */
+#logout-btn {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #00111f;
+  cursor: pointer;
+}
+
+/* Back button styles */
+#back-btn {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #00111f;
+  cursor: pointer;
+}
+
+/* Additional styling for form elements */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  max-width: 400px; /* or any other value that fits your design */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Add this line to add a border */
+  font-size: 16px;
+}
+
+        
+    </style>
+    <header>
+      <div id="user-info"></div>
+      <button id="logout-btn">Logout</button>
+    </header>
+</head>
+<body>
+  <button id="back-btn">Back</button>
+    <div id="user-info"></div>
+    <form action="profile.html" method="post">
+        <h1><header>Technical qualifcations/requirements</header></h1>
+        <label for="qualifcation">Enter you age:</label>
+        <input name="age" id="age" cols="30" rows="10" placeholder="age" style="text-transform: uppercase;" required><br>
+        <label for="qualifcation">Date of Birth:</label>
+        <input type="date" id="birthday" name="birthday"><br>
+        <label for="qualifcation">Gender:</label>
+        <select name="gender" id="gen">
+          <option value="" disabled selected>--Select an Option--</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Transgender">Transgender</option>
+        </select>
+
+    <label for="qualifcation">Marital Status:</label>
+    <select name="ms" id="ms" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Married">Married</option>
+      <option value="unmarried">unmarried</option>
+    </select><br> 
+
+    <label for="qualifcation">No of Children:</label>
+    <select name="children" id="children" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Nil">NIL</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4 or 4+">4 or 4+</option>
+    </select><br>
+    <label for="qualifcation">Residence</label>
+    <select name="residence" id="residence" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Rented">Rented</option>
+      <option value="Owned">Owned</option>
+    </select><br>
+    <label for="qualifcation">Current Employment status</label>
+    <select name="cemployment" id="cemployment" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Employed">Employed</option>
+      <option value="Unemployed">Unemployed</option>
+    </select><br>
+    <label for="qualifcation">Job type</label>
+    <select name="job type" id="job type" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Full time">Full time</option>
+      <option value="Part time">Part time</option>
+      <option value="Contractual">Contractual</option>
+      <option value="Freelancer">Freelancer</option>
+    </select><br>
+    <label for="qualifcation">Job role</label>
+    <select name="job role" id="job role" required>
+      <option value="" disabled selected>--Select an Option--</option>
+      <option value="Backend coder">Backend coder</option>
+      <option value="Frontend coder">Frontend coder</option>
+      <option value="Full stack coder">Full stack coder</option>
+      <option value="Designer">Designer</option>
+      <option value="Tester">Tester</option>
+      <option value="Manager">Manager</option>
+      </select><br>
+      <label for="qualifcation">Previously worked companies</label>
+      <select name="pwc" id="pwc" class="selectpicker" multiple data-live-search="true" required>
+        <option value="Nil">NIL</option>
+        <option value="Not mentioned">Not Mentioned</option>
+        <option value="Microsoft">Microsoft</option>
+        <option value="Google">Google</option>
+        <option value="Amazon">Amazon</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Apple">Apple</option>
+        <option value="TCS">TCS</option>
+        <option value="Infosys">Infosys</option>
+        <option value="Wipro">Wipro</option>
+        <option value="HCL">HCL</option>
+        <option value="Cognizant">Cognizant</option>
+        <option value="Accenture">Accenture</option>
+        <option value="Tech Mahindra">Tech Mahindra</option>
+        </select><br>
+        <label for="qualifcation">10th:</label>
+        <select name="10" id="10" required>
+          <option value="" disabled selected>--Select an Option--</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select><br> 
+        <label for="qualification">12th:</label>
+        <select name="12" id="12" required>
+          <option value="" disabled selected>--Select an Option--</option>
+            <option value="Nil">NIL</option>
+            <option value="Science">Science</option>
+            <option value="Commerce">Commerce</option>
+            <option value="Arts">Arts</option>
+            <option value="Humanities">Humanities</option>
+        </select><br>
+        <label for="qualification">ITI:</label>
+        <select name="12" id="iti" required>
+          <option value="" disabled selected>--Select an Option--</option>
+            <option value="Nil">NIL</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Automobile">Automobile</option>
+            <option value="Auto Mechanics">Auto Mechanics</option>
+            <option value="Diesel Mechanic">Diesel Mechanics</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Electronics">Electronics</option>
+            <option value="IT">IT</option>
+            <option value="EV">EV Mechanics</option>
+        </select><br>
+        <label for="qualification">Diploma:</label>
+        <select name="12" id="diploma" required>
+          <option value="" disabled selected>--Select an Option--</option>
+            <option value="Nil">NIL</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Automobile">Automobile</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Electronics">Electronics</option>
+            <option value="IT">IT</option>
+            <option value="BCA">BCA</option>
+        </select><br>
+        <label for="qualification">Graduation (Technical/General):</label>
+        <select name="12" id="grad" required>
+          <option value="" disabled selected>--Select an Option--</option>
+            <option value="Nil">NIL</option>
+            <option value="BBA">BBA</option>
+            <option value="BCom">B Com</option>
+            <option value="BA">BA</option>
+            <option value="BSC">BSC</option>
+            <option value="BE/B.Tech">BE/B.tech(Automobile/Mechanical/Electrical/Electronics/IT)</option>
+        </select><br>
+        <label for="qualification">Post Graduation:</label>
+        <select name="12" id="post grad" required>
+          <option value="" disabled selected>--Select an Option--</option>
+            <option value="Nil">NIL</option>
+            <option value="MBA">MBA(Sales)</option>
+            <option value="Marketing">MBA(Marketing)</option>
+            <option value="HR">MBA(HR)</option>
+            <option value="Finance">MBA(Finance)</option>
+            <option value="MCom">M.Com</option>
+            <option value="MSC">MSC</option>
+            <option value="MA">MA</option>
+        </select><br>
+        <label for="special skill">Special skill</label>
+        <input type="text" id="ss" size="40%" placeholder="Any other skill not mentioned in qualifcations"><br>
+        <div class="slidecontainer">
+            <label for="experience">Number of years of Experience</label>
+            <select name="12" id="exp">
+              <option value="" disabled selected>--Select an Option--</option>
+              <option value="Fresher">Fresher</option>
+              <option value="1 year">1 year</option>
+              <option value="2 years">2 years</option>
+              <option value="3 years">3 years</option>
+              <option value="4 years">4 years</option>
+              <option value="5 years">5 years</option>
+              <option value="6 years">6 years</option>
+              <option value="7 years">7 years</option>
+              <option value="8 years">8 years</option>
+              <option value="9 years">9 years</option>
+              <option value="10 years">10 years</option>
+              <option value="11 years">11 years</option>
+              <option value="12 years">12 years</option>
+              <option value="13 years">13 years</option>
+              <option value="14 years">14 years</option>
+              <option value="15 years">15 years</option>
+              <option value="16 years">16 years</option>
+              <option value="17 years">17 years</option>
+              <option value="18 years">18 years</option>
+              <option value="19 years">19 years</option>
+              <option value="20 years">20 years</option>
+              <option value="21 years">21 years</option>
+              <option value="22 years">22 years</option>
+              <option value="23 years">23 years</option>
+              <option value="24 years">24 years</option>
+              <option value="25 years">25 years</option>
+              <option value="26 years">26 years</option>
+              <option value="27 years">27 years</option>
+              <option value="28 years">28 years</option>
+              <option value="29 years">29 years</option>
+              <option value="30 years">30 years</option>
+            </select>
+        </div>
+        <label for="state-select">Select Employment state:</label>
+<select id="state" required>
+  <option value="" disabled selected>--Select Employment State/UT--</option>
+  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+  <option value="Andhra Pradesh">Andhra Pradesh</option>
+  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+  <option value="Assam">Assam</option>
+  <option value="Bihar">Bihar</option>
+  <option value="Chandigarh">Chandigarh</option>
+  <option value="Chhattisgarh">Chhattisgarh</option>
+  <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+  <option value="Delhi">Delhi</option>
+  <option value="Goa">Goa</option>
+  <option value="Gujarat">Gujarat</option>
+  <option value="Haryana">Haryana</option>
+  <option value="Himachal Pradesh">Himachal Pradesh</option>
+  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+  <option value="Jharkhand">Jharkhand</option>
+  <option value="Karnataka">Karnataka</option>
+  <option value="Kerala">Kerala</option>
+  <option value="Ladakh">Ladakh</option>
+  <option value="Lakshadweep">Lakshadweep</option>
+  <option value="Madhya Pradesh">Madhya Pradesh</option>
+  <option value="Maharashtra">Maharashtra</option>
+  <option value="Manipur">Manipur</option>
+  <option value="Meghalaya">Meghalaya</option>
+  <option value="Mizoram">Mizoram</option>
+  <option value="Nagaland">Nagaland</option>
+  <option value="Odisha">Odisha</option>
+  <option value="Puducherry">Puducherry</option>
+  <option value="Punjab">Punjab</option>
+  <option value="Rajasthan">Rajasthan</option>
+  <option value="Sikkim">Sikkim</option>
+  <option value="Tamil Nadu">Tamil Nadu</option>
+  <option value="Telangana">Telangana</option>
+  <option value="Tripura">Tripura</option>
+  <option value="Uttar Pradesh">Uttar Pradesh</option>
+  <option value="Uttarakhand">Uttarakhand</option>
+  <option value="West Bengal">West Bengal</option>
+</select><br>
+
+        <label for="location">Current Employment Location(City)</label>
+        <input name="location" id="district" cols="30" rows="10" placeholder="City" style="text-transform: uppercase;" required><br>
+        <label for="location">Pin Code</label>
+        <input name="location" id="pin_code" cols="30" rows="10" placeholder="Pin Code" style="text-transform: uppercase;" required><br>
+        <label for="qualification">Current Salary</label>
+        <select name="current salary" id="current income" required>
+          <option value="" disabled selected>--Select an Option--</option>
+          <option value="0-10000">Less than 10,000</option>
+          <option value="10000-20000">10,000 - 20,000</option>
+          <option value="20000-30000">20,000 - 30,000</option>
+          <option value="30000-40000">30,000 - 40,000</option>
+          <option value="40000-50000">40,000 - 50,000</option>
+          <option value="50000-75000">50,000 - 75,000</option>
+          <option value="75000-100000">75,000 - 1,00,000</option>
+          <option value="100000-200000">1,00,000 - 2,00,000</option>
+          <option value="200000-500000">2,00,000 - 5,00,000</option>
+          <option value="500000-1000000">5,00,000 - 10,00,000</option>
+          <option value="1000000+">More than 10,00,000</option>
+        </select>
+        <label for="qualification">Expected Salary</label>
+        <select name="expected salary" id="e salary" required>
+          <option value="" disabled selected>--Select an Option--</option>
+          <option value="0-10000">Less than 10,000</option>
+          <option value="10000-20000">10,000 - 20,000</option>
+          <option value="20000-30000">20,000 - 30,000</option>
+          <option value="30000-40000">30,000 - 40,000</option>
+          <option value="40000-50000">40,000 - 50,000</option>
+          <option value="50000-75000">50,000 - 75,000</option>
+          <option value="75000-100000">75,000 - 1,00,000</option>
+          <option value="100000-200000">1,00,000 - 2,00,000</option>
+          <option value="200000-500000">2,00,000 - 5,00,000</option>
+          <option value="500000-1000000">5,00,000 - 10,00,000</option>
+          <option value="1000000+">More than 10,00,000</option>
+        </select>
+        <input id="submitBtn" type="submit" value="Submit">  
+      </form>
+
+      <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+        import { getDatabase, ref, get, push, update } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+  
+  
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          // your firebase config
+          apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+        authDomain: "codeday-32a37.firebaseapp.com",
+        databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+        projectId: "codeday-32a37",
+        storageBucket: "codeday-32a37.appspot.com",
+        messagingSenderId: "306519396408",
+        appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+        measurementId: "G-QYL57RYSHE"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth();
+        
+        // Get the elements
+        const userInfo = document.getElementById("user-info");
+        const logoutBtn = document.getElementById("logout-btn");
+  
+        
+        
+  
+  
+        // Display the user's name and email
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const usersRef = ref(db, "users/applicant");
+            get(usersRef).then((snapshot) => {
+              const userSnapshot = snapshot.child(user.uid);
+              const userName = userSnapshot.child("name").val();
+              const userEmail = user.email;
+              const userphone = userSnapshot.child("phone_number").val();
+              userInfo.textContent = `${userName}`;
+  
+              const form = document.querySelector('form');
+              const userRef = ref(db, 'users/applicant/' + user.uid);
+  form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  event.preventDefault();
+  const job_type = document.getElementById("job type").value;
+    update(userRef, {job_type: job_type})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const job_role = document.getElementById("job role").value;
+    update(userRef, {job_role: job_role})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const pwc = document.getElementById("pwc").value;
+    update(userRef, {pwc: pwc})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const cemployment = document.getElementById("cemployment").value;
+    update(userRef, {cemployment: cemployment})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const age = document.getElementById("age").value;
+    update(userRef, {age: age})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const dob = document.getElementById("birthday").value;
+    update(userRef, {dob: dob})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const gen = document.getElementById("gen").value;
+    update(userRef, {gen: gen})
+      .then(() => {
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.error('Error updating : ', error);
+        });
+  const ten = document.getElementById("10").value;
+    update(userRef, { 10: ten })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const twelve = document.getElementById("12").value;
+    update(userRef, { 12: twelve })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const iti = document.getElementById("iti").value;
+    update(userRef, { iti: iti })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const diploma = document.getElementById("diploma").value;
+    update(userRef, { diploma: diploma })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const grad = document.getElementById("grad").value;
+    update(userRef, { grad: grad })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const post = document.getElementById("post grad").value;
+    update(userRef, { PG: post })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const ss = document.getElementById("ss").value;
+    update(userRef, { SS: ss })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+      const exp = document.getElementById("exp").value;
+    update(userRef, { exp: exp })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const ms = document.getElementById("ms").value;
+    update(userRef, { ms: ms })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const children = document.getElementById("children").value;
+    update(userRef, { children: children })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const residence = document.getElementById("residence").value;
+    update(userRef, { residence: residence })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const state = document.getElementById("state").value;
+    update(userRef, { state: state })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const district = document.getElementById("district").value;
+    update(userRef, { district: district })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const pin_code = document.getElementById("pin_code").value;
+    update(userRef, { pin: pin_code })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating pin code: ', error);
+      });
+    const current_income = document.getElementById("current income").value;
+    update(userRef, { CI: current_income })
+      .then(() => {
+        console.log('Salary updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating salary: ', error);
+      });
+    const es = document.getElementById("e salary").value;
+    update(userRef, { ES: es })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating : ', error);
+      });
+    const uid = auth.currentUser.uid;
+        window.location.replace(`profile.html?applicant${uid}`);
+  });
+            });
+          } else {
+            userInfo.textContent = "You are not logged in";
+          }
+        });
+        
+        // Add event listener to logout button
+        logoutBtn.addEventListener("click", () => {
+          auth.signOut().then(() => {
+            // Redirect to login page
+            window.location.replace("/register/login/index.html");
+          });
+        });
+  
+  
+        const backBtn = document.getElementById("back-btn");
+        backBtn.addEventListener("click", () => {
+    const uid = auth.currentUser.uid;
+    window.location.replace(`/register/dashboard/new.html?applicant${uid}`);
+  });
+    </script>
+</body>
+</html>

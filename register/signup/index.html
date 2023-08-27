@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+        import { sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyA-zwS2QZeFLkqDWOc-xR4uUawuaWtVK1s",
+    authDomain: "codeday-32a37.firebaseapp.com",
+    databaseURL: "https://codeday-32a37-default-rtdb.firebaseio.com",
+    projectId: "codeday-32a37",
+    storageBucket: "codeday-32a37.appspot.com",
+    messagingSenderId: "306519396408",
+    appId: "1:306519396408:web:3259cac90ea070238bd6cd",
+    measurementId: "G-QYL57RYSHE"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+        const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const phone_numberInput = document.getElementById("phone_number");
+const nameInput = document.getElementById("name");
+// Get the submit button
+const submitBtn = document.getElementById("submitBtn");
+
+// Get the Auth object for the default app
+const auth = getAuth();
+
+// Add event listener to submit button
+submitBtn.addEventListener("click", (e) => {
+  const checkbox = document.getElementById("terms");
+  if (!checkbox.checked) {
+    alert("Please agree to the terms and conditions");
+    return;
+  }
+  e.preventDefault();
+  const name = nameInput.value;
+  const phone_number = phone_numberInput.value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  // Create a new user with the given email and password
+  createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            // Write the user data to the database
+            set(ref(db, "users/applicant/" + user.uid), {
+              name: name,
+              phone_number: phone_number,
+              need: "applicant",
+              email: email,
+              password: password,
+            })
+              .then(() => {
+                // sendEmailVerification(auth.currentUser);
+                // alert("User registered and data saved successfully!");
+                var options = {
+            "key": "rzp_test_BkYUdZgsy3MsDM",
+            "amount": "100",
+            "currency": "INR",
+            "name": "Jobs4all",
+            "description": "Jobs Forever",
+            "image": "",
+            "handler": function (response){
+        // Store the payment id in the hidden input field
+        $('#razorpay_payment_id').val(response.razorpay_payment_id);
+        // Redirect to login.html
+        setTimeout(function() {
+          
+          sendEmailVerification(auth.currentUser);
+    window.location.href = "/register/login/index.html";
+    
+});
+sendEmailVerification(auth.currentUser);
+
+    },
+            "prefill": {
+                "name": name,
+                "email": email,
+                "contact": phone_number
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        })
+              .catch((error) => {
+                console.error("Error writing data to database", error);
+              });
+          })
+          .catch((error) => {
+            console.error("Error creating user", error);
+            alert("Error creating user");
+          });
+              
+      });
+
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;  
+        }
+        
+        header {
+            background-color: #2196F3;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"], input[type="tel"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        button[type="submit"] {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #53b2ff;
+        }
+
+        input[type="text"], input[type="tel"], input[type="password"] {
+        width: 100%;
+        max-width: 400px; /* or any other value that fits your design */
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc; /* Add this line to add a border */
+        }
+        
+        body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+}
+
+header {
+  background-color: #2196F3;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="password"],
+input[type="email"] {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
+              0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #53b2ff;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="checkbox"] + a {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+input[type="checkbox"] + a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sign Up</h1>
+    </header>
+    <p>If you have a registered account pease login <a href="/register/login/index.html">here</a> or read the details about this website <a href="applicant.html">here</a></p>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Type your name" name="name" required>
+        <label for="phone_number">Phone Number:</label>
+        <input type="tel" id="phone_number" placeholder="Type your phone number (+91)" name="phone_number" maxlength="10" pattern="[0-9]{10}" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Type your email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Type your password" name="password" required>
+        <label>
+            <input type="checkbox" name="agree" id="terms" required>
+            I agree to the <a href="T&C.html">terms and conditions</a>.
+        </label>
+        <form action="/register/login/index.html" method="POST">
+          <button type="submit" id="submitBtn" >Submit</button>
+          <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+      </form>
+    </form>
+</body>
+</html>
